@@ -37,3 +37,23 @@ export const generatePreSignedDownloadUrl = async (
     throw error;
   }
 };
+
+// passed in contentType needs to match file or object contentType.
+// the resulting URL needs to be a http put request.
+export const generatePreSignedUploadUrl = async (
+  s3: S3,
+  bucketName: string,
+  objectKey: string,
+  contentType: string,
+  expiresInSeconds: number = 3600, // Default to 1 hour )
+) => {
+  const params = {
+    Bucket: bucketName,
+    Key: objectKey,
+    Expires: expiresInSeconds,
+    ContentType: contentType, // contentType needs to match the file upload's contentType
+  };
+
+  const uploadUrl = await s3.getSignedUrlPromise("putObject", params);
+  return uploadUrl;
+};

@@ -1,4 +1,7 @@
-import { generatePreSignedDownloadUrl } from "aws-preauthentication/src";
+import {
+  generatePreSignedDownloadUrl,
+  generatePreSignedUploadUrl,
+} from "aws-preauthentication/src";
 import "aws-sdk";
 import { S3 } from "aws-sdk";
 
@@ -20,3 +23,5 @@ export type R2_ENV = {
 export const loginToR2Bucket = (data: S3.ClientConfiguration) => new S3(data);
 
 export const generateR2PreSignedDownloadUrl = generatePreSignedDownloadUrl;
+
+export const generateR2PreSignedUploadUrl = generatePreSignedUploadUrl;
