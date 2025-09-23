@@ -1,5 +1,5 @@
 {
-  "name": "aws-preauthentication",
+  "name": "cloudflare-preauthentications",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "aws-preauthentication": "workspace:*",
     "aws-sdk": "^2.1692.0"
   }
 }

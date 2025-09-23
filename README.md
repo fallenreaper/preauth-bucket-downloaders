@@ -8,7 +8,7 @@ When dealing with cloudflare and dealing content to users, as well as in Vercel,
 
 
 ### Tasks
-[ ] Create and Set up a AWS Bucket Tool.
-[ ] Create a Sample for AWS
-[ ] Create and set up a Cloudflare Bucket Tool
-[ ] Create a sample for Cloudflare
+[x] Create and Set up a AWS Bucket Tool.
+[x] Create a Sample for AWS
+[x] Create and set up a Cloudflare Bucket Tool
+[x] Create a sample for Cloudflare
