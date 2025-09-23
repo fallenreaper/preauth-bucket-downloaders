@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"module": "esnext",
+		"outDir": "./dist",
+		"declaration": true,
+		"rootDir": "./src",
+		"strict": true
+	},
+	"files": [],
+	"references": [
+		{ "path": "./packages/aws-preauthentication" },
+	]
+}

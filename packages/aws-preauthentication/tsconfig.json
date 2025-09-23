@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "es2016",
+		"module": "commonjs",
+		"outDir": "./dist",
+		"strict": true,
+		"esModuleInterop": true,
+		"declaration": true, // Required for project references
+		"composite": true // Required for project references
+	},
+	"include": ["src"]
+}
