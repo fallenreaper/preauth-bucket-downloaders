@@ -1,5 +1,5 @@
 {
-  "name": "ls",
+  "name": "filetransfer",
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/fallenreaper/preauth-bucket-downloaders#readme",
@@ -19,15 +19,17 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "dotenv-run -r ./.env -- pnpm --filter aws-sample test",
     "format": "pnpm exec biome format --write",
     "lint": "pnpm exec biome lint",
     "lint:fix": "pnpm exec biome lint --write"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
+    "@dotenv-run/cli": "^1.3.6",
     "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
+    "rimraf": "^6.0.1",
     "typescript": "^5.9.2"
   }
 }

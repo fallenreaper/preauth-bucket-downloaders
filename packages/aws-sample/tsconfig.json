@@ -8,12 +8,7 @@
     "strict": true,
     "esModuleInterop": true,
     "declaration": true, // Required for project references
-    "composite": true, // Required for project references,
-    "resolveJsonModule": true
+    "composite": true // Required for project references
   },
-  "include": ["src/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*.ts"]
 }

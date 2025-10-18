@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
     "module": "esnext",
+    "target": "esnext",
     "outDir": "./dist",
     "declaration": true,
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "strict": true
   },
   "files": [],
   "references": [
     { "path": "./packages/aws-preauthentication" },
-    { "path": "./packages/cloudflare-preauthentications" }
+    // { "path": "./packages/cloudflare-preauthentications" },
+    { "path": "./packages/aws-sample"}
   ]
 }
