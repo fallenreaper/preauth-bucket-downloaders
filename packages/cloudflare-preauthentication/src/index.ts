@@ -2,9 +2,7 @@ import {
   generatePreSignedDownloadUrl,
   generatePreSignedUploadUrl,
 } from "aws-preauthentication";
-import {
-  S3Client
-} from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 
 export type R2_ENV_OPTIONAL = {
   R2_ACCOUNT_ID: string | undefined;
@@ -23,13 +21,13 @@ export type R2_ENV = {
 
 export const loginToR2 = (data: R2_ENV) =>
   new S3Client({
-  region: data.R2_REGION,
-  endpoint: `https://${data.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: data.R2_ACCESS_KEY_ID,
-    secretAccessKey: data.R2_SECRET_ACCESS_KEY,
-  },
-});
+    region: data.R2_REGION,
+    endpoint: `https://${data.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: data.R2_ACCESS_KEY_ID,
+      secretAccessKey: data.R2_SECRET_ACCESS_KEY,
+    },
+  });
 
 export const generateR2PreSignedDownloadUrl = generatePreSignedDownloadUrl;
 
