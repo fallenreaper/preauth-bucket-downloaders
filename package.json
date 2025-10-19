@@ -18,7 +18,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "pnpm --filter './packages/*-preauthentication' build && pnpm --filter './packages/*-sample' build",
+    "build": "pnpm --filter './packages/*' build",
+    "build:inorder": "pnpm --filter './packages/*-preauthentication' build && pnpm --filter './packages/*-sample' build",
     "test:aws": "dotenv-run -r ./.env -- pnpm --filter aws-sample test",
     "test:cloudflare": "dotenv-run -r ./.env -- pnpm --filter cloudflare-sample test",
     "clean": "pnpm --filter './packages/*' clean",
