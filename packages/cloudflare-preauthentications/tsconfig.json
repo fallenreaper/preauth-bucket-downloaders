@@ -8,5 +8,9 @@
     "declaration": true, // Required for project references
     "composite": true // Required for project references
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "node_modules", 
+    "dist"
+  ]
 }

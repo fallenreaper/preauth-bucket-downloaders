@@ -6,6 +6,8 @@ import {
   type S3_ENV_OPTIONAL,
 } from "aws-preauthentication";
 import fs from "fs";
+import { Readable } from "stream";
+import { finished } from 'stream/promises';
 
 const environmentInfo: S3_ENV_OPTIONAL = {
   S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID,
@@ -20,7 +22,7 @@ if (Object.values(environmentInfo).indexOf(undefined) >= 0) {
   );
 }
 
-const main = async () => {
+const uploadSample = async () => {
   const parsedEnv = environmentInfo as S3_ENV;
   const S3 = loginToAws(parsedEnv);
   const filePath = "samples/samplefile.txt"
@@ -28,7 +30,8 @@ const main = async () => {
   // const formData = new FormData();
   // formData.append("file", file);
 
-  const url = await generatePreSignedUploadUrl( S3, parsedEnv.S3_BUCKET, `uploads/${filePath}`, "text/plain");
+  const objectKeyLocation = `uploads/${filePath}`;
+  const url = await generatePreSignedUploadUrl( S3, parsedEnv.S3_BUCKET, objectKeyLocation, "text/plain");
   console.log(`URL Obtained: ${url}`)
   
   // console.log(`Generated Form Data: ${formData}`)
@@ -42,8 +45,49 @@ const main = async () => {
   console.log(`Response Info: `, response)
   if (!response.ok){
     const text = await response.text()
-    console.log(`Error Status: ${response.status}`)
-    console.log(`Error Text: ${text}`)
+    console.log(`Error! ${response.status}: ${text}`)
   }
+  return objectKeyLocation;
 }
-main()
+
+const downloadSample = async (objectKey: string) => {
+  const parsedEnv = environmentInfo as S3_ENV;
+  const S3 = loginToAws(parsedEnv);
+
+  const url = await generatePreSignedDownloadUrl(S3, parsedEnv.S3_BUCKET, objectKey);
+
+  const response = await fetch( url, {
+    method: "GET", 
+    headers: {
+      "Content-Type": "text/plain"
+    }
+  })
+
+  console.log("Fetch finished");
+  if( ! response.ok){
+    const text = await response.text();
+    console.log(`Error! ${response.status}: ${text}`)
+  }
+  console.log("Response Information:", response);
+
+  const { body } = response;
+  if ( !body ){ 
+    return;
+  }
+
+  const writeStream = fs.createWriteStream("./FOO.txt");
+  await finished( Readable.fromWeb( body as any ).pipe(writeStream));
+}
+
+const main = async () => {
+  console.log("Loading a Sample File")
+  const objectKeyToDownload = await uploadSample();
+
+  console.log("Downloading a Sample file")
+  await downloadSample(objectKeyToDownload);
+
+  console.log("Finished!")
+
+}
+
+main();
