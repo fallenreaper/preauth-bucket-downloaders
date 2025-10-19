@@ -7,7 +7,7 @@ import {
 } from "aws-preauthentication";
 import fs from "fs";
 import { Readable } from "stream";
-import { finished } from 'stream/promises';
+import { finished } from "stream/promises";
 
 const environmentInfo: S3_ENV_OPTIONAL = {
   S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID,
@@ -15,7 +15,7 @@ const environmentInfo: S3_ENV_OPTIONAL = {
   S3_BUCKET: process.env.S3_BUCKET,
   S3_REGION: process.env.S3_REGION,
 };
-console.log("Env Information: ", environmentInfo)
+console.log("Env Information: ", environmentInfo);
 if (Object.values(environmentInfo).indexOf(undefined) >= 0) {
   throw new Error(
     `Required Variables are missing. ${JSON.stringify(environmentInfo)}`,
@@ -25,69 +25,77 @@ if (Object.values(environmentInfo).indexOf(undefined) >= 0) {
 const uploadSample = async () => {
   const parsedEnv = environmentInfo as S3_ENV;
   const S3 = loginToAws(parsedEnv);
-  const filePath = "samples/samplefile.txt"
+  const filePath = "samples/samplefile.txt";
   const fileContent = fs.readFileSync(`./${filePath}`);
   // const formData = new FormData();
   // formData.append("file", file);
 
   const objectKeyLocation = `uploads/${filePath}`;
-  const url = await generatePreSignedUploadUrl( S3, parsedEnv.S3_BUCKET, objectKeyLocation, "text/plain");
-  console.log(`URL Obtained: ${url}`)
-  
+  const url = await generatePreSignedUploadUrl(
+    S3,
+    parsedEnv.S3_BUCKET,
+    objectKeyLocation,
+    "text/plain",
+  );
+  console.log(`URL Obtained: ${url}`);
+
   // console.log(`Generated Form Data: ${formData}`)
   const response = await fetch(url, {
     method: "PUT",
     body: fileContent,
     headers: {
-      "Content-Type": "text/plain"
-    }
-  })
-  console.log(`Response Info: `, response)
-  if (!response.ok){
-    const text = await response.text()
-    console.log(`Error! ${response.status}: ${text}`)
+      "Content-Type": "text/plain",
+    },
+  });
+  console.log(`Response Info: `, response);
+  if (!response.ok) {
+    const text = await response.text();
+    console.log(`Error! ${response.status}: ${text}`);
   }
   return objectKeyLocation;
-}
+};
 
 const downloadSample = async (objectKey: string) => {
   const parsedEnv = environmentInfo as S3_ENV;
   const S3 = loginToAws(parsedEnv);
 
-  const url = await generatePreSignedDownloadUrl(S3, parsedEnv.S3_BUCKET, objectKey);
+  const url = await generatePreSignedDownloadUrl(
+    S3,
+    parsedEnv.S3_BUCKET,
+    objectKey,
+  );
 
-  const response = await fetch( url, {
-    method: "GET", 
+  const response = await fetch(url, {
+    method: "GET",
     headers: {
-      "Content-Type": "text/plain"
-    }
-  })
+      "Content-Type": "text/plain",
+    },
+  });
 
   console.log("Fetch finished");
-  if( ! response.ok){
+  if (!response.ok) {
     const text = await response.text();
-    console.log(`Error! ${response.status}: ${text}`)
+    console.log(`Error! ${response.status}: ${text}`);
   }
   console.log("Response Information:", response);
 
   const { body } = response;
-  if ( !body ){ 
+  if (!body) {
     return;
   }
 
   const writeStream = fs.createWriteStream("./FOO.txt");
-  await finished( Readable.fromWeb( body as any ).pipe(writeStream));
-}
+  await finished(Readable.fromWeb(body as any).pipe(writeStream));
+};
 
 const main = async () => {
-  console.log("Loading a Sample File")
+  console.log("Loading a Sample File");
   const objectKeyToDownload = await uploadSample();
 
-  console.log("Downloading a Sample file")
+  console.log("Downloading a Sample file");
   await downloadSample(objectKeyToDownload);
 
-  console.log("Finished!")
-
-}
+  console.log("Finished!");
+};
 
 main();

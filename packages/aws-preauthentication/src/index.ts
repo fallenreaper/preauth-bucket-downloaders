@@ -1,6 +1,10 @@
 // import { S3 } from "aws-sdk";
-import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // If i need to pull from a different package, i can
 
@@ -17,7 +21,8 @@ export type S3_ENV = {
   S3_REGION: string;
 };
 
-export const loginToAws = (data: S3_ENV) => new S3Client({
+export const loginToAws = (data: S3_ENV) =>
+  new S3Client({
     region: data.S3_REGION,
     credentials: {
       accessKeyId: data.S3_ACCESS_KEY_ID,
@@ -33,10 +38,12 @@ export const generatePreSignedDownloadUrl = async (
 ): Promise<string> => {
   try {
     const command = new GetObjectCommand({
-    Bucket: bucketName,
-    Key: objectKey
-  });
-    const url = await getSignedUrl(s3, command, {expiresIn: expiresInSeconds});
+      Bucket: bucketName,
+      Key: objectKey,
+    });
+    const url = await getSignedUrl(s3, command, {
+      expiresIn: expiresInSeconds,
+    });
     return url;
   } catch (error) {
     console.error("Error generating pre-signed URL:", error);
@@ -56,8 +63,10 @@ export const generatePreSignedUploadUrl = async (
   const command = new PutObjectCommand({
     Bucket: bucketName,
     Key: objectKey,
-    ContentType: contentType
+    ContentType: contentType,
   });
-  const uploadUrl = await getSignedUrl(s3, command, {expiresIn: expiresInSeconds});
+  const uploadUrl = await getSignedUrl(s3, command, {
+    expiresIn: expiresInSeconds,
+  });
   return uploadUrl;
 };
