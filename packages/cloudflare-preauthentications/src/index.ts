@@ -1,9 +1,10 @@
 import {
   generatePreSignedDownloadUrl,
   generatePreSignedUploadUrl,
-} from "aws-preauthentication/src";
-import "aws-sdk";
-import { S3 } from "aws-sdk";
+} from "aws-preauthentication";
+import {
+  S3Client
+} from "@aws-sdk/client-s3";
 
 export type R2_ENV_OPTIONAL = {
   R2_ACCOUNT_ID: string | undefined;
@@ -20,7 +21,14 @@ export type R2_ENV = {
   R2_REGION: string;
 };
 
-export const loginToR2Bucket = (data: S3.ClientConfiguration) => new S3(data);
+export const loginToR2 = (data: R2_ENV) =>
+  new S3Client({
+    region: data.R2_REGION,
+    credentials: {
+      accessKeyId: data.R2_ACCESS_KEY_ID,
+      secretAccessKey: data.R2_SECRET_ACCESS_KEY,
+    },
+  });
 
 export const generateR2PreSignedDownloadUrl = generatePreSignedDownloadUrl;
 
