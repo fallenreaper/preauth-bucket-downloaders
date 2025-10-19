@@ -18,9 +18,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "tsc --build",
+    "build": "pnpm --filter './packages/*-preauthentication' build && pnpm --filter './packages/*-sample' build",
     "test:aws": "dotenv-run -r ./.env -- pnpm --filter aws-sample test",
     "test:cloudflare": "dotenv-run -r ./.env -- pnpm --filter cloudflare-sample test",
+    "clean": "pnpm --filter './packages/*' clean",
     "format": "pnpm exec biome format --write",
     "lint": "pnpm exec biome lint",
     "lint:fix": "pnpm exec biome lint --write"
