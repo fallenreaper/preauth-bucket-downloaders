@@ -16,7 +16,6 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.1692.0",
     "aws-preauthentication": "workspace:^1.0.0"
   }
 }

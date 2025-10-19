@@ -1,4 +1,3 @@
-// import { S3 } from "aws-sdk";
 import {
   S3Client,
   GetObjectCommand,

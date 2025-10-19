@@ -88,6 +88,7 @@ const downloadSample = async (objectKey: string) => {
   await finished(Readable.fromWeb(body as any).pipe(writeStream));
 };
 
+// The Main Function to execute for this file.
 const main = async () => {
   console.log("Loading a Sample File");
   const objectKeyToDownload = await uploadSample();
