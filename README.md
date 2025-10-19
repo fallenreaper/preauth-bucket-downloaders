@@ -11,8 +11,7 @@ When dealing with cloudflare and dealing content to users, as well as in Vercel,
 [x] Create and Set up a AWS Bucket Tool.
 [x] Create a Sample for AWS
 [x] Create and set up a Cloudflare Bucket Tool
-  [ ] Needs to be adjusted and keep updated for this so we can confirm tests.
-[] Create a sample for Cloudflare
+[x] Create a sample for Cloudflare
 
 
 ## AWS Configuration information
@@ -34,3 +33,19 @@ You need to set up a policy to apply to users, which enables them to get and put
 Establishing a user is down within IAM system.  You can create a User.  You can then assign a policy to it.  You can assign the one above to the user.  You would want to add permissions, and then Attach policies directly.  You would filter it by Customer Managed Policies to narrow it.  When the policy is assigned to the user, it can then add and get from the bucket.
 
 Access Keys and Secrets.  You will need to make sure that you set the key and secret so it can be used in this example app, assigned as ENV Variables.
+
+## Cloudflare R2 Datastores
+
+Similar to AWS, you will need a few pieces of information in order to access a specific bucket.
+
+### Account ID
+
+R2 Object Storage Dashboard has the Account ID on the right side of the screen.
+
+### Credentials
+
+Towards the Top Right, there is a button for managing API Tokens.  When clicking on that, create a User API Token.  This will allow you to create read-write access user that will then have the specific environment variables needed.  It will create the ID and Secret for you to apply.
+
+### Region?
+
+Unlike AWS, where you define a region, you will commonly use `auto` as the Bucket Region when creating said bucket.

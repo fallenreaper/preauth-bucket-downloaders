@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "test": "dotenv-run -r ./.env -- pnpm --filter aws-sample test",
+    "test:aws": "dotenv-run -r ./.env -- pnpm --filter aws-sample test",
+    "test:cloudflare": "dotenv-run -r ./.env -- pnpm --filter cloudflare-sample test",
     "format": "pnpm exec biome format --write",
     "lint": "pnpm exec biome lint",
     "lint:fix": "pnpm exec biome lint --write"
